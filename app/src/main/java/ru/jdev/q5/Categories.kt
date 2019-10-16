@@ -2,8 +2,8 @@ package ru.jdev.q5
 
 import android.content.Context
 import ru.jdev.q5.gathering.Check
+import ru.jdev.q5.repository.impl.CategoryFileRepository
 import ru.jdev.q5.storage.Item
-import ru.jdev.q5.storage.QCollection
 import java.io.File
 
 data class Category(override val id: Int?, val name: String) : Item
@@ -12,7 +12,7 @@ private val DEFAULT_CATEGORIES = listOf("Продукты", "Рестораны"
 
 class Categories(private val context: Context) {
 
-    private val categories = QCollection(File(context.getExternalFilesDir(null), "categories.txt"), { c -> Category(c.index, c.value) }, Category::name)
+    private val categories = CategoryFileRepository(File(context.getExternalFilesDir(null), "categories.txt"))
 
     init {
         if (categories.list().isEmpty()) {

@@ -4,9 +4,8 @@ import android.content.Context
 import android.os.Build
 import android.os.Environment
 import android.util.Log
-import ru.jdev.q5.Transaction.Companion.parse
-import ru.jdev.q5.storage.QCollection
-import java.io.*
+import ru.jdev.q5.repository.impl.TransactionFileRepository
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -82,7 +81,7 @@ class TransactionLog(private val context: Context) {
 class LogPart(content: File) {
 
     val name: String = content.name
-    private val transactions = QCollection(content, { line -> parse(name, line) }, { it.toCsvLine() })
+    private val transactions = TransactionFileRepository(content)
 
     fun list(): List<Transaction> = transactions.list()
 
